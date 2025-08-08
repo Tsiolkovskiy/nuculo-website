@@ -1,0 +1,122 @@
+# GraphQL Schema for TypeScript-Go Integration
+
+# Scalars
+scalar DateTime
+
+# Core Types
+type User {
+  id: ID!
+  email: String!
+  name: String!
+  avatar: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Post {
+  id: ID!
+  title: String!
+  content: String!
+  author: User!
+  tags: [String!]!
+  published: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Comment {
+  id: ID!
+  content: String!
+  author: User!
+  post: Post!
+  createdAt: DateTime!
+}
+
+# Input Types
+input CreatePostInput {
+  title: String!
+  content: String!
+  tags: [String!]!
+  published: Boolean = false
+}
+
+input UpdatePostInput {
+  title: String
+  content: String
+  tags: [String!]
+  published: Boolean
+}
+
+input PostFilters {
+  authorId: ID
+  published: Boolean
+  tags: [String!]
+  searchTerm: String
+}
+
+input PaginationInput {
+  page: Int = 1
+  limit: Int = 20
+}
+
+# Response Types
+type PostConnection {
+  edges: [PostEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type PostEdge {
+  node: Post!
+  cursor: String!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
+  expiresAt: DateTime!
+}
+
+# Root Types
+type Query {
+  # User queries
+  me: User
+  user(id: ID!): User
+  
+  # Post queries
+  posts(filters: PostFilters, pagination: PaginationInput): PostConnection!
+  post(id: ID!): Post
+  
+  # Search
+  searchPosts(query: String!, limit: Int = 10): [Post!]!
+}
+
+type Mutation {
+  # Authentication
+  login(email: String!, password: String!): AuthPayload!
+  register(email: String!, password: String!, name: String!): AuthPayload!
+  refreshToken: AuthPayload!
+  
+  # Post mutations
+  createPost(input: CreatePostInput!): Post!
+  updatePost(id: ID!, input: UpdatePostInput!): Post!
+  deletePost(id: ID!): Boolean!
+  
+  # Comment mutations
+  addComment(postId: ID!, content: String!): Comment!
+  deleteComment(id: ID!): Boolean!
+}
+
+type Subscription {
+  # Real-time updates
+  postAdded: Post!
+  postUpdated(id: ID!): Post!
+  commentAdded(postId: ID!): Comment!
+}
