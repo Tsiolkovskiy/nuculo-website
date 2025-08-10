@@ -1,0 +1,27 @@
+fragment PostInfo on Post {
+  id
+  title
+  content
+  tags
+  published
+  createdAt
+  updatedAt
+  author {
+    ...UserInfo
+  }
+}
+
+fragment PostSummary on Post {
+  id
+  title
+  content
+  tags
+  published
+  createdAt
+  updatedAt
+  author {
+    id
+    name
+    avatar
+  }
+}

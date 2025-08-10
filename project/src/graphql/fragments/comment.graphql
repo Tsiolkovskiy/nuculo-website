@@ -1,0 +1,14 @@
+fragment CommentInfo on Comment {
+  id
+  content
+  createdAt
+  author {
+    id
+    name
+    avatar
+  }
+  post {
+    id
+    title
+  }
+}

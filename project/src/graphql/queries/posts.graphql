@@ -1,0 +1,32 @@
+#import "../fragments/post.graphql"
+#import "../fragments/user.graphql"
+
+query GetPosts($filters: PostFilters, $pagination: PaginationInput) {
+  posts(filters: $filters, pagination: $pagination) {
+    edges {
+      node {
+        ...PostSummary
+      }
+      cursor
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    totalCount
+  }
+}
+
+query GetPost($id: ID!) {
+  post(id: $id) {
+    ...PostInfo
+  }
+}
+
+query SearchPosts($query: String!, $limit: Int) {
+  searchPosts(query: $query, limit: $limit) {
+    ...PostSummary
+  }
+}

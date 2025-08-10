@@ -1,0 +1,13 @@
+#import "../fragments/user.graphql"
+
+query Me {
+  me {
+    ...UserInfo
+  }
+}
+
+query GetUser($id: ID!) {
+  user(id: $id) {
+    ...UserInfo
+  }
+}

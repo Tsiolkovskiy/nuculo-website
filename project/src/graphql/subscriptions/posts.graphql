@@ -1,0 +1,14 @@
+#import "../fragments/post.graphql"
+#import "../fragments/user.graphql"
+
+subscription PostAdded {
+  postAdded {
+    ...PostInfo
+  }
+}
+
+subscription PostUpdated($id: ID!) {
+  postUpdated(id: $id) {
+    ...PostInfo
+  }
+}

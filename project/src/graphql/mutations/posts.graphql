@@ -1,0 +1,18 @@
+#import "../fragments/post.graphql"
+#import "../fragments/user.graphql"
+
+mutation CreatePost($input: CreatePostInput!) {
+  createPost(input: $input) {
+    ...PostInfo
+  }
+}
+
+mutation UpdatePost($id: ID!, $input: UpdatePostInput!) {
+  updatePost(id: $id, input: $input) {
+    ...PostInfo
+  }
+}
+
+mutation DeletePost($id: ID!) {
+  deletePost(id: $id)
+}

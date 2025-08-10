@@ -1,0 +1,7 @@
+#import "../fragments/comment.graphql"
+
+subscription CommentAdded($postId: ID!) {
+  commentAdded(postId: $postId) {
+    ...CommentInfo
+  }
+}

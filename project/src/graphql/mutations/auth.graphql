@@ -1,0 +1,31 @@
+#import "../fragments/user.graphql"
+
+mutation Login($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
+    token
+    user {
+      ...UserInfo
+    }
+    expiresAt
+  }
+}
+
+mutation Register($email: String!, $password: String!, $name: String!) {
+  register(email: $email, password: $password, name: $name) {
+    token
+    user {
+      ...UserInfo
+    }
+    expiresAt
+  }
+}
+
+mutation RefreshToken {
+  refreshToken {
+    token
+    user {
+      ...UserInfo
+    }
+    expiresAt
+  }
+}

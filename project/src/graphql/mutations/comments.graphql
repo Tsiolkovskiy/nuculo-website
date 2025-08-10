@@ -1,0 +1,11 @@
+#import "../fragments/comment.graphql"
+
+mutation AddComment($postId: ID!, $content: String!) {
+  addComment(postId: $postId, content: $content) {
+    ...CommentInfo
+  }
+}
+
+mutation DeleteComment($id: ID!) {
+  deleteComment(id: $id)
+}
